@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Deposit {
+  id      Int    @id @default(autoincrement())
+  user    String
+  amount  String
+  balance String
+  date    String
+  users   Users @relation(fields: [user], references: [userId])
+}
+
+model TransferSend {
+  id      Int    @id @default(autoincrement())
+  sendId    String
+  receiveId  String
+  amount  String
+  balance String
+  date    String
+  users   Users @relation(fields: [sendId], references: [userId])
+}
+
+model TransferReceive {
+  id      Int    @id @default(autoincrement())
+  receiveId    String
+  sendId  String
+  amount  String
+  balance String
+  date    String
+  users   Users @relation(fields: [receiveId], references: [userId])
+}
+
+model Users {
+  id      Int    @id @default(autoincrement())
+  userId  String @unique
+  name    String
+  date    String
+  balance String
+
+  deposits  Deposit[]
+  withdraws Withdraw[]
+  send TransferSend[]
+  receive TransferReceive[]
+}
+
+model Withdraw {
+  id      Int    @id @default(autoincrement())
+  user    String
+  amount  String
+  date    String
+  balance String @default("0.00")
+  users   Users @relation(fields: [user], references: [userId])
+}

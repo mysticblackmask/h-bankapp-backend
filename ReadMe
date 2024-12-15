@@ -1,0 +1,11 @@
+//api
+get
+/bank/dash / totalamount /
+/bank/dash / totalinout
+/ bank / dash / withdraw
+/bank/dash/history
+/bank/history
+post
+/bank/deposit
+/bank/withdraw
+/bank/transfer
